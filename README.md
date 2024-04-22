@@ -1,4 +1,4 @@
-# Ferramenta: Sistema Bancário
+# Sistema: Banking Global Finance
 
 <div>
 <img src="./img/bank.png" alt="Imagem 1" width="48%">
