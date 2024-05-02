@@ -1,129 +1,224 @@
 import os
 import time
 
-#Pages
-pages = ["Menu", "Depósito", "Saque", "Extrato", "Banco=Global=Finance"]
-withdraw_qty_max = 3; withdraw_limit_max = 500; withdraw_qty = 3; withdraw_limit = 500
-balance = 0; deposit = 0
-extract = ""
-
 # Functions
-def display_pages(x):
-    os. system('cls')
-    print(pages[x].center(100,"="))
-
-def display_extract(a, b, c):
-    spaces = (100 - len(a) - len(b) - len(c)) // 6
+def to_start():
     print("=" * 100)
-    print(f"{' ' * spaces}{a}{' ' * spaces}|{' ' * spaces}{b}{' ' * spaces}|{' ' * spaces}{c}{' ' * spaces}")
+    header(-1)
     print("=" * 100)
-    if extract == "3":
-        print("Não foram realizadas movimentações")
-    else:
-        print(extract)
-    print("=" * 100)
-    print(f"Saldo disponível: R$ {balance:.2f}")
-    print("Fim".center(100,"="))
-
-def include_extract(option):
-    global extract
-    if option == 1:
-        extract += f"{' ' * 9}{time.strftime('%d/%m/%y %X')}{' ' * 9}|{' ' * 13}Depósito{' ' * 13}|{' ' * 10}R$ {deposit:.2f}{' ' * 10}\n"
-    if option == 2:
-        extract += f"{' ' * 9}{time.strftime('%d/%m/%y %X')}{' ' * 9}|{' ' * 14}Saque{' ' * 15}|{' ' * 9}(R$ {withdraw:.2f}){' ' * 9}\n"
-
-def impress(y, z):
-    print(f"\nOperação realizada com sucesso! \n{y}: R$ {z:.2f}")    
-
-def invalid_operation(i):
-    print(f"System: Operação inválida, {i}.")
+    print("System: Seja bem-vindo.")
     time.sleep(3)
-    option = ""
+
+def header(header):
+    pages = ["Menu", "Criar Usuário", "Criar Conta", "Listar Usuário/Conta", "Depósito", "Saque", "Extrato", "Banco=Global=Finance"]
+    if header != -1:
+        os. system('cls')
+    print(pages[header].center(100,"="))
 
 def repeat(option):
     while True:
-        response = input("\nSystem: Deseja realizar outra operação?\n[s] sim ou [n] não\n=> ").lower()
-        if response in ("sim", "s"):
+        again = input("\nSystem: Deseja realizar outra operação?\n[s] sim ou [n] não\n=> ").lower()
+        if again in ("sim", "s"):
             return True
-        elif response in ("não", "n"):
+        elif again in ("não", "n"):
             exit()
         else:
-            os. system('cls')
-            display_pages(option)
+            header(option)
             print("\nSystem: Por favor, digite 'sim' ou 'não'")
             continue
 
-#Welcome
-print("=" * 100)
-print(pages[4].center(100,"="))
-print("=" * 100)
-print("System: Seja bem-vindo")
-time.sleep(5)
-while True:
-#Menu
-    os. system('cls')
-    print(pages[0].center(100,"="))
-    menu = f'''
-    1 Depósito 
-    2 Saque
-    3 Extrato
-    '''
-    print(menu)
-    option = input("System: Informe o nº da opção desejada:\n=> ").strip()
-    if option.replace(",", "").isdigit():
-        option = int(option)
-        if(option > 0 and option <=3):           
-#Deposit
-            if option == 1:
-                display_pages(option)
-                deposit = input("System: Informe o valor do depósito:\n=> ").strip()
-                if deposit.replace(",", "").isdigit():
-                    deposit = float(deposit.replace(',', '.'))
-                    if deposit > 0:
-                        balance += deposit
-                        include_extract(option)
-                        impress("Depósito", deposit)
-                        repeat(option)
-                    else:
-                        print("\nSystem: Operação não realizada! Tente novamente com um número positivo")
-                        time.sleep(5)
-                else:
-                    invalid_operation("permitido apenas valores positivos")
-#Withdraw
-            if option == 2:
-                display_pages(option)
-                withdraw = input("System: Informe o valor do saque:\n=> ").strip()
-                if withdraw.replace(",", "").isdigit():
-                    withdraw = float(withdraw.replace(',', '.'))
-                    if withdraw_qty > 0 and withdraw_qty <= withdraw_qty_max:
-                        if withdraw <= withdraw_limit :
-                            if withdraw <= balance:
-                                withdraw_qty -= 1
-                                withdraw_limit -= withdraw
-                                balance -= withdraw
-                                include_extract(option)
-                                impress("Saque", withdraw)
-                                repeat(option)
-                            else:
-                                print("\nSystem: Operação não realizada! Saldo Insuficiente")
-                                time.sleep(5)
-                        else:
-                            print(f"\nSystem: Operação não realizada! Você excedeu o Limite Diário de Valor de Saques disponíveis: R$ {withdraw_limit:.2f}")
-                            print(f"System: Caso desejar aumentar o limite, contate seu Gerente")
-                            time.sleep(10)
-                    else:
-                        print(f"\nSystem: Operação não realizada! Você excedeu o Limite Diário de Quantidade de Saques: {withdraw_qty_max}")
-                        print(f"System: Caso desejar aumentar o limite, contate seu Gerente")
-                        time.sleep(10)
-                else:
-                    invalid_operation("permitido apenas valores positivos")
-#Extract
-            if option == 3:
-                display_pages(option)
-                print("System: Segue abaixo o histórico das movimentações:\n")
-                display_extract("Data/hora", "Operação", "Valor")
-                repeat(option)
-        else:
-            invalid_operation("informe o número de uma das operações acima")
+def menu():
+    header(0)
+    menu = '''
+    1\tCriar Usuário
+    2\tCriar Conta
+    3\tListar Usuário/Conta
+    4\tDepósito 
+    5\tSaque
+    6\tExtrato
+    
+    System: Informe o nº da opção desejada:
+    ⇒ '''
+    return input(menu)
+
+def validation(value):
+    if value.startswith("-"):
+        print("Operação Inválida".center(100,"|"),f"\nSystem: Favor informe um Número Positivo.")
+        return 0
+    
+    elif value.replace(",", ".").replace(".", "").isdigit():
+        value = float(value.replace(".", "").replace(",", "."))
+        return value
     else:
-        invalid_operation("permitido apenas números positivos")
+        print("Operação Inválida".center(100,"|"),f"\nSystem: Favor informe um Número.")
+        return 0
+
+def new_user(users, option):
+    header(1)
+    cpf = input ("System: Favor informe o CPF do usuário:\n⇒ ").strip().replace(".","").replace("-","")
+    user = filter_users(cpf, users)
+
+    if user:
+        print("Operação Inválida".center(100,"|"),f"\nSystem: CPF informado já cadastrado.")
+        repeat(option)
+        return
+
+    name = input("\nSystem: Informe o nome completo:\n⇒ ").strip()
+    birth_date = input("\nSystem: Informe a data de nascimento (dd-mm-aaaa):\n⇒ ").strip()
+    address = input("\nSystem: Informe o endereço (logradouro, nrº - bairro - cidade/sigla estado):\n⇒ ").strip()
+
+    header(1)
+    user_created = {"name":name, "birth_date": birth_date, "cpf": cpf, "address": address}
+    print("Operação Concluída".center(100,"-"),f"\nSystem: Usuário criado com sucesso:")
+    for i, value in user_created.items():
+        print(f"{i.capitalize()}: {value}")
+
+    users.append(user_created)
+    repeat(option)
+
+def filter_users(cpf, users):
+    filter_user = [user for user in users if user["cpf"] == cpf]
+    return filter_user[0] if filter_user else None
+
+def new_account(agency, number_account, users, option):
+    header(2)
+    cpf = input ("System: Favor informe o CPF do usuário:\n⇒ ").strip().replace(".","").replace("-","")
+    user = filter_users(cpf, users)
+
+    if user:
+        account_created = {"agency": agency, "number_account": number_account, "user": user}
+        print("Operação Concluída".center(100,"-"),f"\nSystem: Conta criada com sucesso:")
+        for i, value in account_created.items():
+            if i == 'user':
+                print(f"{i.capitalize()} - CPF: {value['cpf']}")
+            else:
+                print(f"{i.capitalize()}: {value}")
+
+        repeat(option)
+        return account_created
+    
+    print("Operação Inválida".center(100,"|"),f"\nSystem: Usuário não encontrado.")
+    repeat(option)
+    
+def list_accounts(accounts, option):
+    header(3)
+    if not accounts:
+        print("System: Nenhuma conta foi registrada.")
+    for i in accounts:
+        line = f'''
+            Agência:\t{i['agency']}
+            Conta:\t{i['number_account']}
+            Titular:\t{i['user']['name']}
+            '''
+        print("-" * 100,"\n",line)
+    repeat(option)
+
+def deposit(balance, value, option, extract, /):
+    if value > 0:    
+        balance += value
+        print("Operação Concluída".center(100,"-"),f"\nSystem: Valor Depositado: R$ {value:.2f}")
+        extract = include_impress(value, extract, option)
+    return balance, extract
+
+def withdraw(*, balance, value, option, extract, limit_value_withdraw, limit_qtd_withdraw, qtd_withdraw,):
+        exceeded_balance = value > balance
+        exceeded_value_limit = value > limit_value_withdraw
+        exceeded_qtd_limit = qtd_withdraw >=  limit_qtd_withdraw
+
+        if exceeded_balance:
+            print("Operação Inválida".center(100,"|"),"\nSystem: Você não possui saldo suficiente.")
+
+        elif exceeded_value_limit:
+            print("Operação Inválida".center(100,"|"),f"\nSystem: O valor informado excede o limite de saque diário de R$ {limit_value_withdraw:.2f}.")
+        
+        elif exceeded_qtd_limit:
+            print("Operação Inválida".center(100,"|"),f"\nSystem: A quantidade excede o limite de saque diário de {limit_qtd_withdraw}x.")
+
+        elif value > 0:
+            balance -= value
+            qtd_withdraw += 1
+            extract = include_impress(value, extract, option)
+            print("Operação Concluída".center(100,"-"))
+            print(f'Valor Saque: R$ {value:.2f}')
+
+        return balance, extract, qtd_withdraw
+
+def include_impress(value,extract, option):
+    if option == 4:
+        extract += f"\t    {time.strftime('%d/%m/%y %X')}\t\t\tDepósito\t\t\t R$ {value:.2f}\n"
+    if option == 5:
+        extract += f"\t    {time.strftime('%d/%m/%y %X')}\t\t\tSaque\t\t\t\t(R$ {value:.2f})\n"
+    return extract
+
+def impress(balance, /, *, extract):
+        print("-" * 100)
+        print("\t\tData/hora\t\t\tOperações\t\t\t   Valor")
+        print("-" * 100)
+        print("System: Não foram realizadas movimentações." if not extract else extract)
+        print("-" * 100)
+        print(f"Saldo = R$ {balance:.2f}")
+
+def main():
+    LIMIT_QTD_WITHDRAW = 3
+    LIMIT_VALUE_WITHDRAW  = 500
+    qtd_withdraw = 0
+
+    balance = 0
+    extract = ""
+
+    AGENCY = "0001"
+    users = []
+    accounts = []
+
+    to_start()
+    while True:
+        option = menu()
+        if option.isdigit():
+            option = int(option)
+
+            if option == 1:
+                new_user(users, option)
+
+            if option == 2:
+                number_account = len(accounts) + 1
+                account = new_account(AGENCY, number_account, users, option)    
+
+                if account:
+                    accounts.append(account)
+
+            if option == 3:
+                list_accounts(accounts, option)
+
+            if option == 4:
+                header(option)
+                value = input("System: Informe o valor do Depósito:\n⇒ ").strip()
+                value = validation(value)
+                balance, extract = deposit(balance, value, option, extract)
+                repeat(option)
+
+            if option == 5:
+                header(option)
+                value = input("System: Informe o valor do Saque:\n⇒ ").strip()
+                value = validation(value)
+                balance, extract, qtd_withdraw = withdraw(
+                    balance = balance,
+                    value = value,
+                    option = option,
+                    extract = extract,
+                    limit_value_withdraw = LIMIT_VALUE_WITHDRAW,
+                    limit_qtd_withdraw = LIMIT_QTD_WITHDRAW,
+                    qtd_withdraw = qtd_withdraw,
+                    )
+                repeat(option)
+
+            if option == 6:
+                header(option)
+                impress(balance, extract=extract)
+                repeat(option)
+
+        else:
+            print("Operação Inválida".center(100,"|"),f"\nSystem: Favor informe o Número do Serviço.")
+            repeat(0)
+            continue
+
+main()

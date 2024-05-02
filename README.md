@@ -1,13 +1,20 @@
 # Sistema: Banking Global Finance
 
 <div>
-<img src="./img/bank.png" alt="Imagem 1" width="48%">
+<img src="./img/home.png" alt="Imagem 1" width="48%">
 <img src="./img/menu.png" alt="Imagem 1" width="48%">
 </div>
 <div align="center">
-<img src="./img/deposit.png" alt="Imagem 1" width="30%">
-<img src="./img/withdraw.png" alt="Imagem 2" width="30%">
-<img src="./img/extract.png" alt="Imagem 3" width="30%">
+<img src="./img/users.png" alt="Imagem 1" width="48%">
+<img src="./img/accounts.png" alt="Imagem 2" width="48%">
+</div>
+<div align="center">
+<img src="./img/list.png" alt="Imagem 3" width="48%">
+<img src="./img/deposit.png" alt="Imagem 1" width="48%">
+</div>
+<div align="center">
+<img src="./img/withdrawal.png" alt="Imagem 2" width="48%">
+<img src="./img/extract.png" alt="Imagem 3" width="48%">
 </div>
 
 ## 👨🏻‍💻 Abrir Projeto:
@@ -26,27 +33,39 @@ Ele irá abrir o terminal no qual poderá interagir com o sistema.
 
 ## 📝 Introdução
 
-Sistema Bancário criado para a empresa Global Finance, realizar suas operações financeiras.
+Essa é a versão 2.0 que criei do Sistema Bancário criado para a empresa Global Finance, realizar suas operações financeiras.
 
 ## 💡 Sobre
 
 Fui contratado pelo Banco Global Finance para desenvolvimento de seu novo sistema. Esse banco deseja modernizar suas operações e para isso escolheu a linguagem Python. <br>
-Para a primeira versão do sistema iremos implementar 3 operações: Saque, Depósito e Visualizar Extrato.
+Para essa segunda versão, além de otimizar as 3 operações iniciais: Saque, Depósito e Visualizar Extrato, através de funções, também desenvolvi novas funcionalidades, como: Criar Usuário, Criar Conta e Listar Usuário/Conta.<br>
+Isso tudo, respeitando todas as regras do negócio:
 
-📩 Depósito:<br>
-Deve ser possível depositar valores positivos para a conta bancária. <br>
-A v1 do projeto trabalha apenas com 1 usuário, dessa forma não precisamos nos preocupar em identificar qual é o número da agência e conta bancária. <br>
-Todos os depósitos devem ser armazenados em uma variável e exibidos na operação de extrato.
+📇 Criar Usuário:<br>
+Essa nova funcionalidade permite criar usuários em uma lista, com os seguintes dados: "Nome, Data de Nascimento, CPF (apenas números) e Endereço".<br>
+O endereço segue o formato: "Logradouro, nr - Bairro - Cidade/Sigla Estado".<br>
+Uma validação impede o cadastro de dois ou mais usuários com o mesmo CPF.<br>
+
+💳 Criar Conta:<br>
+Essa nova funcionalidade permite criar contas, cada uma composta por: "Agência, Número da Conta e Usuário".<br>
+A Agência é fixa: "0001", e o Número da Conta é sequencial, começando em 1. Isso permite que um usuário tenha mais de uma conta.<br>
+Se não houver contas cadastradas, uma mensagem informa ao usuário o motivo.<br>
+
+🗒️ Listar Usuário/Conta:<br>
+Desenvolvi essa função para facilitar a consulta das contas criadas, exibindo detalhes como Agência, Conta e Titular.<br>
+
+📨 Depósito:<br>
+Apenas valores positivos são aceitos para depósito. Se o valor for diferente, o sistema informa que a operação é inválida.<br>
+Todos os depósitos são registrados e exibidos no Extrato.<br>
 
 💸 Saque:<br>
-O sistema deve permitir realizar 3 saques diários com limite máximo de R$ 500,00 por saque.<br>
-Caso o usuário não tenha saldo em conta, o sistema deve exibir uma mensagem informando que não será possível sacar o dinheiro por falta de saldo. <br>
-Todos os saques devem ser armazenados em uma variável e exibidos na operação de Extrato.
+O sistema permite até 3 saques diários, com um limite máximo total de R$ 500,00 por saque. Se esse limite for ultrapassado, o sistema informa o motivo.<br>
+Se o usuário não tiver saldo suficiente, uma mensagem avisa sobre a impossibilidade de realizar o saque.<br>
 
 📜Extrato:<br>
-Essa operação deve listar todos os depósitos e saques realizados na conta. No fim da listagem deve ser exibido o saldo atual da conta. <br>
-Se o extrato estiver em branco, exibir a mensagem: Não foram realizadas movimentações. <br>
-Os valores devem ser exibidos utilizando o formato R$ xxx.xx, exemplo: 1500.45 = R$ 1500.45
+Essa operação lista todos os depósitos e saques, mostrando também o saldo atual da conta.<br>
+Se não houver movimentações, é exibida a mensagem padrão: "Não foram realizadas movimentações".<br>
+Os valores são exibidos no formato R$ xxx.xx, por exemplo: R$ 1500.45.<br>
 
 ## 📚 Conhecimentos
 
