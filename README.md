@@ -34,14 +34,14 @@ Fui contratado pelo Banco Global Finance para desenvolvimento de seu novo sistem
 Para a primeira versão do sistema iremos implementar 3 operações: Saque, Depósito e Visualizar Extrato.
 
 📩 Depósito:<br>
-O sistema deve permitir realizar 3 saques diários com limite máximo de R$ 500,00 por saque.<br>
-Caso o usuário não tenha saldo em conta, o sistema deve exibir uma mensagem informando que não será possível sacar o dinheiro por falta de saldo. <br>
-Todos os saques devem ser armazenados em uma variável e exibidos na operação de Extrato.
-
-💸 Saque:<br>
 Deve ser possível depositar valores positivos para a conta bancária. <br>
 A v1 do projeto trabalha apenas com 1 usuário, dessa forma não precisamos nos preocupar em identificar qual é o número da agência e conta bancária. <br>
 Todos os depósitos devem ser armazenados em uma variável e exibidos na operação de extrato.
+
+💸 Saque:<br>
+O sistema deve permitir realizar 3 saques diários com limite máximo de R$ 500,00 por saque.<br>
+Caso o usuário não tenha saldo em conta, o sistema deve exibir uma mensagem informando que não será possível sacar o dinheiro por falta de saldo. <br>
+Todos os saques devem ser armazenados em uma variável e exibidos na operação de Extrato.
 
 📜Extrato:<br>
 Essa operação deve listar todos os depósitos e saques realizados na conta. No fim da listagem deve ser exibido o saldo atual da conta. <br>
